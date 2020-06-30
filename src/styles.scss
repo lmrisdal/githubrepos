@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+$background: #f4f7f7;
+
+html, body {
+    font-family: Roboto, -apple-system, serif;
+    background-color: $background;
+}
