@@ -1,81 +1,18 @@
 <main>
-  <section>
-    <h1>GitHub Repositories</h1>
-    <h4>Showing the top 100 GitHub repositories by number of stars</h4>
-    <div *ngIf="isLoading">Loading repositories ...</div>
-  </section>
-  <section class="table-container" *ngIf="!isLoading">
-    <table>
-      <thead>
-        <tr>
-          <th class="id">Id</th>
-          <th class="name">Name</th>
-          <th class="created">Created</th>
-          <th class="stars">Stars</th>
-          <th class="forks">Forks</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let repo of pagedRepositoryList">
-          <td class="id">{{ repo.id }}</td>
-          <td class="name">
-            <a [href]="repo.html_url" target="_blank">{{ repo.full_name }}</a>
-          </td>
-          <td class="created">{{ repo.created_at | date:'dd.MM.yyyy' }}</td>
-          <td class="stars">
-            <div>
-              <div></div>
-              {{ repo.stargazers_count | number }}
-            </div>
-          </td>
-          <td class="forks">
-              <div>
-                <div></div>
-                {{ repo.forks_count | number }}
-              </div>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <td colspan="5">
-          <div>
-            <div>
-              <label id="per-page-label" for="per-page">Rows per page</label>
-              <select id="per-page" [ngModel]="perPage" (ngModelChange)="changePerPage($event)">
-                <option>10</option>
-                <option default>20</option>
-                <option>50</option>
-              </select>
-            </div>
-            <div>
-              <label>Page {{ page + 1 }} of {{ totalPages }}</label>
-              <button class="icon-button"
-                id="first"
-                [disabled]="this.page === 0"
-                (click)="getPage(0)"
-                aria-label="first page">
-              </button>
-              <button class="icon-button"
-                id="previous"
-                [disabled]="this.page === 0"
-                (click)="previousPage()"
-                aria-label="previous page">
-              </button>
-              <button class="icon-button"
-                id="next"
-                [disabled]="this.page === this.totalPages - 1"
-                (click)="nextPage()"
-                aria-label="next page">
-              </button>
-              <button class="icon-button" id="last"
-                [disabled]="this.page === this.totalPages - 1"
-                (click)="getPage(this.totalPages - 1)"
-                aria-label="last page">
-              </button>
-            </div>
-          </div>
-        </td>
-      </tfoot>
-    </table>
-  </section>
+    <section>
+        <h1>GitHub Repositories</h1>
+        <h4>Showing the top 100 GitHub repositories by number of stars</h4>
+        <div *ngIf="isLoading">Loading repositories ...</div>
+    </section>
+    <app-repository-table
+        *ngIf="!isLoading"
+        [pagedRepositoryList]="pagedRepositoryList"
+        [page]="page"
+        [totalPages]="totalPages"
+        [perPage]="perPage"
+        (changePerPage)="changePerPage($event)"
+        (getPage)="getPage($event)"
+        (nextPage)="nextPage()"
+        (previousPage)="previousPage()"
+    ></app-repository-table>
 </main>
